@@ -203,10 +203,10 @@ class Wc_Minimum_Order_Amount_Admin {
 		<label>
 			<select name="<?php echo $this->option_name . '_user_roles[]' ?>" id="<?php echo $this->option_name . '_user_rolse' ?>" multiple>
 				<?php foreach (get_editable_roles() as $role_name => $role_info) : ?>
-					<?php if(in_array($role_info['name'], $user_roles)) : ?>
-		    			<option name="<?php echo $role_name; ?>" selected><?php echo $role_info['name']; ?></option>
+					<?php if(in_array($role_name, $user_roles)) : ?>
+		    			<option name="<?php echo $role_name; ?>" selected><?php echo $role_name; ?></option>
 		    		<?php else : ?>
-		    			<option name="<?php echo $role_name; ?>"><?php echo $role_info['name']; ?></option>
+		    			<option name="<?php echo $role_name; ?>"><?php echo $role_name; ?></option>
 		    		<?php endif; ?>
 		  		<?php endforeach; ?>
 			</select>

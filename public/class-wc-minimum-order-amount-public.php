@@ -82,10 +82,24 @@ class Wc_Minimum_Order_Amount_Public {
 	 * @since    1.0.0
 	 */
 	public function wc_minimum_order_amount() {
-	    // Set this variable to specify a minimum order value
+
+		global $current_user;
+
+	    // Get minimum order amount from database
 	    $minimum = ( get_option( 'wc_minimum_order_amount_number' ) !==0 ? get_option( 'wc_minimum_order_amount_number' ) : 0 );
-	    // echo $minimum; exit;
-	    if ( WC()->cart->total < $minimum ) {
+	    // Get the user roles to be applied on
+	    $user_roles = ( is_array(get_option( 'wc_minimum_order_amount_user_roles' )) ? get_option( 'wc_minimum_order_amount_user_roles' ) : array() );
+
+	    // Check if one of the user roles intersect with the plugin user roles
+
+	    $apply_on_user = false;
+	    // var_dump($user_roles);
+	    // var_dump($current_user->roles);
+	    // var_dump(!empty(array_intersect($current_user->roles, $user_roles)));
+	    if(!empty(array_intersect($current_user->roles, $user_roles)))
+	    	$apply_on_user = true;
+
+	    if ( WC()->cart->total < $minimum  && $apply_on_user ) {
 
 	        if( is_cart() ) {
 
