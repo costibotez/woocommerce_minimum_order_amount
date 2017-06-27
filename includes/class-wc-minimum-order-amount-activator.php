@@ -71,7 +71,7 @@ class Wc_Minimum_Order_Amount_Activator {
 	public static function admin_notice__error() {
 		?>
 	    <div class="error notice">
-	        <p><?php _e( 'There has been an error. Bummer!', 'my_plugin_textdomain' ); ?></p>
+	        <p><?php _e( 'Please install WooCommerce Plugin first!!!', 'wc-minimum-order-amount' ); ?></p>
 	    </div>
    	 	<?php
 	}
