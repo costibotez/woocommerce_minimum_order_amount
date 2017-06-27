@@ -173,7 +173,7 @@ class Wc_Minimum_Order_Amount_Admin {
 	}
 
 	/**
-	 * Render the radio input field for position option
+	 * Render the minimum order amount option
 	 *
 	 * @since  1.0.0
 	 */
@@ -191,7 +191,7 @@ class Wc_Minimum_Order_Amount_Admin {
 	}
 
 	/**
-	 * Render the radio input field for position option
+	 * Render all available user roles in a select
 	 *
 	 * @since  1.0.0
 	 */
