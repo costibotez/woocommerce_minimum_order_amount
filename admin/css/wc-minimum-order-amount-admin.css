@@ -2,3 +2,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+select#wc_minimum_order_amount_user_role {
+    min-width: 159px;
+}

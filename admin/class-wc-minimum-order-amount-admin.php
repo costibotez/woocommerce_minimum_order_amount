@@ -50,6 +50,15 @@ class Wc_Minimum_Order_Amount_Admin {
 	private $option_name = 'wc_minimum_order_amount';
 
 	/**
+	 * The Options screen hook suffix
+	 *
+	 * @since  	1.0.0
+	 * @access 	private
+	 * @var  	string 		$plugin_screen_hook_suffix 	Plugin screen hook suffix
+	 */
+	private $plugin_screen_hook_suffix;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -127,18 +136,27 @@ class Wc_Minimum_Order_Amount_Admin {
 			$this->plugin_name
 		);
 
-		// Add Minimum Order Amount Field number
+		// Add Minimum Order Amount Field
 		add_settings_field(
 			$this->option_name . '_number',
 			__( 'Minimum order amount', 'wc-minimum-order-amount' ),
 			array( $this, $this->option_name . '_number_cb' ),
 			$this->plugin_name,
-			$this->option_name . '_general',
-			array( 'label_for' => $this->option_name . '_number' )
+			$this->option_name . '_general'
 		);
 
-		// Register Setting
+		// Add User Role Field
+		add_settings_field(
+			$this->option_name . '_user_roles',
+			__( 'Choose user role', 'wc-minimum-order-amount' ),
+			array( $this, $this->option_name . '_user_roles_cb' ),
+			$this->plugin_name,
+			$this->option_name . '_general'
+		);
+
+		// Register Settings
 		register_setting( $this->plugin_name, $this->option_name . '_number', 'intval' );
+		register_setting( $this->plugin_name, $this->option_name . '_user_roles');
 		// var_dump(get_option( $this->option_name . '_number' ));
 
 	}
@@ -166,6 +184,32 @@ class Wc_Minimum_Order_Amount_Admin {
 
 		<label>
 			<input type="text" name="<?php echo $this->option_name . '_number' ?>" id="<?php echo $this->option_name . '_number' ?>" value="<?php echo $number; ?>" />
+			<?php _e( 'Leave it empty if you don\'t want to apply it', 'wc-minimum-order-amount' ); ?>
+		</label>
+		<?php
+
+	}
+
+	/**
+	 * Render the radio input field for position option
+	 *
+	 * @since  1.0.0
+	 */
+	public function wc_minimum_order_amount_user_roles_cb() {
+
+		$user_roles = get_option( $this->option_name . '_user_roles' );
+		// var_dump(get_option( $this->option_name . '_user_roles' ));
+		// echo '<pre>'; print_r(get_editable_roles()); echo '</pre>'; ?>
+		<label>
+			<select name="<?php echo $this->option_name . '_user_roles[]' ?>" id="<?php echo $this->option_name . '_user_rolse' ?>" multiple>
+				<?php foreach (get_editable_roles() as $role_name => $role_info) : ?>
+					<?php if(in_array($role_info['name'], $user_roles)) : ?>
+		    			<option name="<?php echo $role_name; ?>" selected><?php echo $role_info['name']; ?></option>
+		    		<?php else : ?>
+		    			<option name="<?php echo $role_name; ?>"><?php echo $role_info['name']; ?></option>
+		    		<?php endif; ?>
+		  		<?php endforeach; ?>
+			</select>
 			<?php _e( 'Leave it empty if you don\'t want to apply it', 'wc-minimum-order-amount' ); ?>
 		</label>
 		<?php
