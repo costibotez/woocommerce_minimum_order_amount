@@ -61,18 +61,6 @@ class Wc_Minimum_Order_Amount_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wc_Minimum_Order_Amount_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wc_Minimum_Order_Amount_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wc-minimum-order-amount-public.css', array(), $this->version, 'all' );
 
 	}
@@ -84,19 +72,41 @@ class Wc_Minimum_Order_Amount_Public {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wc_Minimum_Order_Amount_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wc_Minimum_Order_Amount_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc-minimum-order-amount-public.js', array( 'jquery' ), $this->version, false );
+
+	}
+
+	/**
+	 * Register the JavaScript for the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wc_minimum_order_amount() {
+	    // Set this variable to specify a minimum order value
+	    $minimum = ( get_option( 'wc_minimum_order_amount_number' ) !==0 ? get_option( 'wc_minimum_order_amount_number' ) : 0 );
+	    // echo $minimum; exit;
+	    if ( WC()->cart->total < $minimum ) {
+
+	        if( is_cart() ) {
+
+	            wc_print_notice(
+	                sprintf( 'You must have an order with a minimum of %s to place your order, your current order total is %s.' ,
+	                    wc_price( $minimum ),
+	                    wc_price( WC()->cart->total )
+	                ), 'error'
+	            );
+
+	        } else {
+
+	            wc_add_notice(
+	                sprintf( 'You must have an order with a minimum of %s to place your order, your current order total is %s.' ,
+	                    wc_price( $minimum ),
+	                    wc_price( WC()->cart->total )
+	                ), 'error'
+	            );
+
+	        }
+	    }
 
 	}
 

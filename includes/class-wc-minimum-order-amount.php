@@ -171,6 +171,8 @@ class Wc_Minimum_Order_Amount {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'woocommerce_checkout_process', $plugin_public, 'wc_minimum_order_amount' );
+		$this->loader->add_action( 'woocommerce_before_cart' , $plugin_public, 'wc_minimum_order_amount' );
 
 	}
 

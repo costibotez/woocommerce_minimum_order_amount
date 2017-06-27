@@ -70,18 +70,6 @@ class Wc_Minimum_Order_Amount_Admin {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wc_Minimum_Order_Amount_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wc_Minimum_Order_Amount_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wc-minimum-order-amount-admin.css', array(), $this->version, 'all' );
 
 	}
@@ -92,18 +80,6 @@ class Wc_Minimum_Order_Amount_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wc_Minimum_Order_Amount_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wc_Minimum_Order_Amount_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc-minimum-order-amount-admin.js', array( 'jquery' ), $this->version, false );
 
@@ -131,7 +107,9 @@ class Wc_Minimum_Order_Amount_Admin {
 	 * @since  1.0.0
 	 */
 	public function display_options_page() {
+
 		include_once 'partials/wc-minimum-order-amount-admin-display.php';
+
 	}
 
 	/**
@@ -140,7 +118,7 @@ class Wc_Minimum_Order_Amount_Admin {
 	 * @since  1.0.0
 	 */
 	public function register_setting() {
-		// echo $this->plugin_name; exit;
+
 		// Add a General section
 		add_settings_section(
 			$this->option_name . '_general',
@@ -148,6 +126,7 @@ class Wc_Minimum_Order_Amount_Admin {
 			array( $this, $this->option_name . '_general_cb' ),
 			$this->plugin_name
 		);
+
 		// Add Minimum Order Amount Field number
 		add_settings_field(
 			$this->option_name . '_number',
@@ -157,9 +136,11 @@ class Wc_Minimum_Order_Amount_Admin {
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_number' )
 		);
+
 		// Register Setting
 		register_setting( $this->plugin_name, $this->option_name . '_number', 'intval' );
 		// var_dump(get_option( $this->option_name . '_number' ));
+
 	}
 
 	/**
@@ -168,7 +149,9 @@ class Wc_Minimum_Order_Amount_Admin {
 	 * @since  1.0.0
 	 */
 	public function wc_minimum_order_amount_general_cb() {
+
 		echo '<p>' . __( 'Please change the settings accordingly.', 'wc-minimum-order-amount' ) . '</p>';
+
 	}
 
 	/**
@@ -177,13 +160,16 @@ class Wc_Minimum_Order_Amount_Admin {
 	 * @since  1.0.0
 	 */
 	public function wc_minimum_order_amount_number_cb() {
+
 		$number = get_option( $this->option_name . '_number' );
 		?>
+
 		<label>
 			<input type="text" name="<?php echo $this->option_name . '_number' ?>" id="<?php echo $this->option_name . '_number' ?>" value="<?php echo $number; ?>" />
 			<?php _e( 'Leave it empty if you don\'t want to apply it', 'wc-minimum-order-amount' ); ?>
 		</label>
 		<?php
+
 	}
 
 }
